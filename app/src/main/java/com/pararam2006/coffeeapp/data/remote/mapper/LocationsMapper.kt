@@ -9,13 +9,13 @@ fun LocationsNetworkDto.toDomain(): LocationsDto {
     return LocationsDto(
         id = id ?: 0,
         name = name ?: "Unknown name",
-        point = point?.toDomain() ?: PointDto(latitude = 0, longitude = 0)
+        point = point?.toDomain() ?: PointDto(latitude = 0.0, longitude = 0.0)
     )
 }
 
 fun PointNetworkDto.toDomain(): PointDto {
     return PointDto(
-        latitude = latitude ?: 0,
-        longitude = longitude ?: 0,
+        latitude = latitude ?: 0.0,
+        longitude = longitude ?: 0.0,
     )
 }

@@ -1,4 +1,4 @@
-package com.pararam2006.coffeeapp.ui.coffeeNearby
+package com.pararam2006.coffeeapp.ui.locations
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -115,27 +115,27 @@ private fun LocationsScreenPreview() {
             locations = listOf(
                 LocationsDto(
                     id = 0, name = "BEDOEV COFFEE", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Coffee Like", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "EM&DI Coffee and Snacks", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Коффе есть", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Набоков", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
 

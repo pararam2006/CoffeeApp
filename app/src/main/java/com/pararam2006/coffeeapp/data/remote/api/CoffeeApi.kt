@@ -20,5 +20,5 @@ interface CoffeeApi {
     @GET("/locations")
     suspend fun getLocations(
         @Header("Authorization") token: String
-    ): LocationsNetworkDto
+    ): List<LocationsNetworkDto>
 }

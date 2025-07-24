@@ -7,6 +7,6 @@ data class LocationsNetworkDto(
 )
 
 data class PointNetworkDto(
-    val latitude: Int?,
-    val longitude: Int?,
+    val latitude: Double?,
+    val longitude: Double?
 )

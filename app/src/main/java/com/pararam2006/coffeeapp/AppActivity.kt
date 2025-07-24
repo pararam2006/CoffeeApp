@@ -27,8 +27,8 @@ import com.pararam2006.coffeeapp.core.navigation.Order
 import com.pararam2006.coffeeapp.core.navigation.Register
 import com.pararam2006.coffeeapp.ui.auth.LoginScreen
 import com.pararam2006.coffeeapp.ui.auth.LoginScreenViewModel
-import com.pararam2006.coffeeapp.ui.coffeeNearby.LocationsScreen
-import com.pararam2006.coffeeapp.ui.coffeeNearby.LocationsViewModel
+import com.pararam2006.coffeeapp.ui.locations.LocationsScreen
+import com.pararam2006.coffeeapp.ui.locations.LocationsViewModel
 import com.pararam2006.coffeeapp.ui.registration.RegistrationScreen
 import com.pararam2006.coffeeapp.ui.registration.RegistrationScreenViewModel
 import com.pararam2006.coffeeapp.ui.theme.CoffeeAppTheme
@@ -116,7 +116,8 @@ class AppActivity : ComponentActivity() {
                                     onPasswordChange = vm::changePassword,
                                     onAuth = vm::auth,
                                     onNavigateToLocations = { navController.navigate(Locations) },
-                                    onNavigateToRegister = { navController.navigate(Register) }
+                                    onNavigateToRegister = { navController.navigate(Register) },
+                                    isSuccess = vm.uiState.isSuccess
                                 )
                             }
 
@@ -125,6 +126,7 @@ class AppActivity : ComponentActivity() {
                                 LocationsScreen(
                                     locations = vm.locationsList,
                                     onLoadLocations = vm::getLocations,
+                                    modifier = Modifier.padding(innerPadding)
                                 )
                             }
                         }
