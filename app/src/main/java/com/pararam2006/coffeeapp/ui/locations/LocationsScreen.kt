@@ -94,17 +94,21 @@ fun Location(name: String) {
             )
             Text(
                 text = name, style = TextStyle(
-                    color = LocationCardTextPrimary, fontWeight = FontWeight.Bold, fontSize = 18.sp
+                    color = LocationCardTextPrimary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
                 )
             )
             Text(
                 text = "1км от вас", //TODO заменить на реальные данные от геолокации
-                style = TextStyle(color = LocationCardTextSecondary, fontSize = 14.sp)
+                style = TextStyle(
+                    color = LocationCardTextSecondary,
+                    fontSize = 14.sp
+                )
             )
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
-
 }
 
 @Preview

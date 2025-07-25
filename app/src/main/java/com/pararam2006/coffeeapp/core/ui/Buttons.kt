@@ -35,7 +35,6 @@ fun CoffeeButton(
         Text(
             text = text,
             style = TextStyle(
-                color = EnabledButtonTextPrimary,
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp
             )
