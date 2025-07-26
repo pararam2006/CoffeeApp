@@ -5,4 +5,5 @@ data class MenuItemDto(
     val name: String,
     val imageUrl: String,
     val price: Int,
+    val count: Int,
 )

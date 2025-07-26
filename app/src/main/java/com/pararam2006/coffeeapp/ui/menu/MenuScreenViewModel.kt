@@ -1,19 +1,20 @@
-package com.pararam2006.coffeeapp.ui.locations
+package com.pararam2006.coffeeapp.ui.menu
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pararam2006.coffeeapp.data.remote.repository.TokenRepository
-import com.pararam2006.coffeeapp.domain.dto.LocationsDto
-import com.pararam2006.coffeeapp.domain.usecase.GetLocationsUseCase
+import com.pararam2006.coffeeapp.domain.dto.MenuItemDto
+import com.pararam2006.coffeeapp.domain.usecase.GetMenuUseCase
 import kotlinx.coroutines.launch
 
-class LocationsViewModel(
-    private val getLocationsUseCase: GetLocationsUseCase,
+class MenuScreenViewModel(
+    private val getMenuUseCase: GetMenuUseCase,
     private val tokenRepository: TokenRepository,
 ) : ViewModel() {
-    var locationsList = mutableStateListOf<LocationsDto>()
+    val TAG = "MenuScreenViewModel"
+    var menu = mutableStateListOf<MenuItemDto>()
         private set
     var token = ""
         private set
@@ -26,14 +27,13 @@ class LocationsViewModel(
         token = tokenRepository.getTokenFromPrefs() ?: ""
     }
 
-    fun getLocations() {
+    fun loadMenu(cafeId: Int) {
         viewModelScope.launch {
-            loadToken()
-            val networkList = getLocationsUseCase(token)
-            Log.d("LocationsAPI", networkList.toString())
-            locationsList.run {
+            val useCaseResult = getMenuUseCase(token, cafeId)
+            Log.d(TAG, useCaseResult.toString())
+            menu.run {
                 clear()
-                addAll(getLocationsUseCase(token))
+                addAll(useCaseResult)
             }
         }
     }

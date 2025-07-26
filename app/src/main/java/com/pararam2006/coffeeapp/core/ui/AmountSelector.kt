@@ -1,10 +1,11 @@
 package com.pararam2006.coffeeapp.core.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,34 +29,35 @@ fun AmountSelector(
     counterTextStyle: TextStyle,
     modifier: Modifier = Modifier,
 ) {
-    val iconSize = 30.dp
+    val iconSize = 25.dp
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = Arrangement.spacedBy(7.dp),
         modifier = modifier,
     ) {
-        IconButton(onClick = onMinusPressed) {
-            Icon(
-                painter = painterResource(R.drawable.akar_icons_minus),
-                contentDescription = null,
-                modifier = Modifier.size(iconSize),
-                tint = buttonsColor
-            )
-        }
+        Icon(
+            painter = painterResource(R.drawable.akar_icons_minus),
+            contentDescription = null,
+            modifier = Modifier
+                .size(iconSize)
+                .padding(all = 0.dp)
+                .clickable { onMinusPressed() },
+            tint = buttonsColor
+        )
 
         Text(
             text = "$count",
             style = counterTextStyle
         )
 
-        IconButton(onClick = onPlusPressed) {
-            Icon(
-                painter = painterResource(R.drawable.akar_icons_plus),
-                contentDescription = null,
-                modifier = Modifier.size(iconSize),
-                tint = buttonsColor
-            )
-        }
+        Icon(
+            painter = painterResource(R.drawable.akar_icons_plus),
+            contentDescription = null,
+            modifier = Modifier
+                .size(iconSize)
+                .clickable { onPlusPressed() },
+            tint = buttonsColor
+        )
     }
 }
 
@@ -64,7 +66,7 @@ fun AmountSelector(
 private fun AmountSelectorPreview() {
     CoffeeAppTheme {
         AmountSelector(
-            count = 1,
+            count = 15,
             onPlusPressed = {},
             onMinusPressed = {},
             buttonsColor = Color(0xFFF6E5D1),

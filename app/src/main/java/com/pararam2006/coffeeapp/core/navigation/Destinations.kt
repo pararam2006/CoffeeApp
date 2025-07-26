@@ -15,7 +15,7 @@ object Locations
 object CoffeeMap
 
 @Serializable
-object Menu
+data class Menu(val id: Int)
 
 @Serializable
 object Order

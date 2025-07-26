@@ -40,6 +40,7 @@ fun LocationsScreen(
     locations: List<LocationsDto>,
     onLoadLocations: () -> Unit,
     modifier: Modifier = Modifier,
+    onNavigateToMap: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         onLoadLocations()
@@ -62,7 +63,7 @@ fun LocationsScreen(
 
         CoffeeButton(
             text = "На карте",
-            onClick = {},
+            onClick = onNavigateToMap,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth(0.9f),
@@ -145,6 +146,7 @@ private fun LocationsScreenPreview() {
 
                 ),
             onLoadLocations = {},
+            onNavigateToMap = {}
         )
     }
 }

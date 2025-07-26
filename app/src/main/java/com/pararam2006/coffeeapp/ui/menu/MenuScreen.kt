@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,9 +43,12 @@ import com.pararam2006.coffeeapp.ui.theme.LocationCardTextSecondary
 fun MenuScreen(
     menu: List<MenuItemDto>,
     onNavigateToOrder: () -> Unit,
+    onLoadMenu: () -> Unit, // Восстановлено до () -> Unit
     modifier: Modifier = Modifier,
-
-    ) {
+) {
+    LaunchedEffect(Unit) {
+        onLoadMenu()
+    }
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -59,7 +63,7 @@ fun MenuScreen(
                 MenuItem(
                     coffeeName = menuItem.name,
                     price = menuItem.price,
-                    count = 2,
+                    count = menuItem.count,
                     onPlusPressed = {},
                     onMinusPressed = {}
                 )
@@ -74,8 +78,6 @@ fun MenuScreen(
                 .fillMaxWidth(0.9f)
         )
     }
-
-
 }
 
 @Composable
@@ -113,8 +115,7 @@ fun MenuItem(
                     .padding(start = 10.dp),
             ) {
                 Text(
-                    text = coffeeName,
-                    style = TextStyle(
+                    text = coffeeName, style = TextStyle(
                         color = LocationCardTextSecondary,
                         fontSize = 18.sp
                     ),
@@ -146,7 +147,6 @@ fun MenuItem(
                             fontSize = 18.sp
                         ),
                     )
-
                 }
             }
         }
@@ -160,7 +160,7 @@ private fun MenuItemPreview() {
         MenuItem(
             coffeeName = "Горячий шоколад",
             price = 200,
-            count = 1,
+            count = 15,
             onPlusPressed = {},
             onMinusPressed = {},
         )
@@ -178,41 +178,48 @@ private fun MenuPreview() {
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                     MenuItemDto(
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                     MenuItemDto(
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                     MenuItemDto(
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                     MenuItemDto(
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                     MenuItemDto(
                         id = 0,
                         name = "Эспрессо",
                         imageUrl = "",
-                        price = 200
+                        price = 200,
+                        count = 0,
                     ),
                 )
             },
             onNavigateToOrder = {},
+            onLoadMenu = {}
         )
     }
 }
