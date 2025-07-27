@@ -8,7 +8,6 @@ import android.graphics.Rect
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,25 +19,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.createBitmap
 import com.pararam2006.coffeeapp.R
+import com.pararam2006.coffeeapp.domain.dto.MarkerDto
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.runtime.image.ImageProvider
-import org.koin.androidx.compose.koinViewModel
+import android.util.Log
 
 @Composable
 fun MapScreen(
-    modifier: Modifier = Modifier,
     startPoint: Point,
+    markers: List<MarkerDto>,
+    modifier: Modifier = Modifier,
     startZoom: Float = 11f,
     onMapReady: ((MapView) -> Unit)? = null,
     onMarkerClick: (Int) -> Unit
 ) {
-    val viewModel: MapScreenViewModel = koinViewModel()
     var mapView by remember { mutableStateOf<MapView?>(null) }
     val context = LocalContext.current
-    val markersFromViewModel by viewModel.markers.collectAsState()
 
     AndroidView(
         modifier = modifier,
@@ -59,13 +58,13 @@ fun MapScreen(
         },
     )
 
-    LaunchedEffect(mapView, markersFromViewModel) {
+    LaunchedEffect(mapView, markers) {
         mapView?.let { map ->
             map.map.mapObjects.clear()
 
             // Центрирование карты на первом маркере, если список не пуст
-            if (markersFromViewModel.isNotEmpty()) {
-                val firstMarkerPoint = markersFromViewModel.first().point
+            if (markers.isNotEmpty()) {
+                val firstMarkerPoint = markers.first().point
                 map.map.move(
                     CameraPosition(firstMarkerPoint, startZoom, 0f, 0f),
                     Animation(Animation.Type.SMOOTH, 1f), // Плавное перемещение
@@ -74,7 +73,7 @@ fun MapScreen(
             }
 
             val iconBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coffee_icon)
-            markersFromViewModel.forEach { markerDto ->
+            markers.forEach { markerDto ->
                 val markerBitmap = createMarkerBitmap(context, iconBitmap, markerDto.name)
                 val imageProvider = ImageProvider.fromBitmap(markerBitmap)
                 val placemark = map.map.mapObjects.addPlacemark(markerDto.point, imageProvider)
@@ -112,10 +111,10 @@ fun createMarkerBitmap(context: android.content.Context, icon: Bitmap, text: Str
     val verticalPaddingPx = verticalPaddingDp * density
 
     val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = textColor.toArgb() // Исправление: используем .toArgb()
+        color = textColor.toArgb()
         textSize = textSizePx
         textAlign = Paint.Align.CENTER
-        typeface = android.graphics.Typeface.DEFAULT_BOLD // Делаем текст жирным
+        typeface = android.graphics.Typeface.DEFAULT_BOLD
     }
 
     val textBounds = Rect()
@@ -131,6 +130,8 @@ fun createMarkerBitmap(context: android.content.Context, icon: Bitmap, text: Str
 
     val totalWidth = (totalContentWidth + 2 * horizontalPaddingPx).toInt()
     val totalHeight = (totalContentHeight + 3 * verticalPaddingPx).toInt()
+
+    Log.d("MapScreen", "createMarkerBitmap - text: $text, totalWidth: $totalWidth, totalHeight: $totalHeight")
 
     val bitmap = createBitmap(totalWidth, totalHeight)
     val canvas = Canvas(bitmap)

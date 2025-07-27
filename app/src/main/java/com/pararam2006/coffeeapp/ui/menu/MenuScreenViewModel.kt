@@ -13,7 +13,6 @@ class MenuScreenViewModel(
     private val getMenuUseCase: GetMenuUseCase,
     private val tokenRepository: TokenRepository,
 ) : ViewModel() {
-    val TAG = "MenuScreenViewModel"
     var menu = mutableStateListOf<MenuItemDto>()
         private set
     var token = ""
@@ -30,10 +29,30 @@ class MenuScreenViewModel(
     fun loadMenu(cafeId: Int) {
         viewModelScope.launch {
             val useCaseResult = getMenuUseCase(token, cafeId)
-            Log.d(TAG, useCaseResult.toString())
+            Log.d("MenuScreenViewModel", useCaseResult.toString())
             menu.run {
                 clear()
                 addAll(useCaseResult)
+            }
+        }
+    }
+
+    fun incrementMenuItemCount(id: Int) {
+        val index = menu.indexOfFirst { it.id == id }
+        if (index != -1) {
+            val currentItem = menu[index]
+            if (currentItem.count < 99) {
+                menu[index] = currentItem.copy(count = currentItem.count + 1)
+            }
+        }
+    }
+
+    fun decrementMenuItemCount(id: Int) {
+        val index = menu.indexOfFirst { it.id == id }
+        if (index != -1) {
+            val currentItem = menu[index]
+            if (currentItem.count > 0) {
+                menu[index] = currentItem.copy(count = currentItem.count - 1)
             }
         }
     }

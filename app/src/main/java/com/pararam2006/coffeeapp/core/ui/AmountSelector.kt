@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pararam2006.coffeeapp.R
+import com.pararam2006.coffeeapp.ui.theme.AmountSelectorButtonsPrimary
+import com.pararam2006.coffeeapp.ui.theme.AmountSelectorCounterPrimary
 import com.pararam2006.coffeeapp.ui.theme.CoffeeAppTheme
 import com.pararam2006.coffeeapp.ui.theme.LocationCardTextPrimary
 
@@ -25,8 +27,11 @@ fun AmountSelector(
     count: Int,
     onPlusPressed: () -> Unit,
     onMinusPressed: () -> Unit,
-    buttonsColor: Color,
-    counterTextStyle: TextStyle,
+    buttonsColor: Color = AmountSelectorButtonsPrimary,
+    counterTextStyle: TextStyle = TextStyle(
+        color = AmountSelectorCounterPrimary,
+        fontSize = 18.sp
+    ),
     modifier: Modifier = Modifier,
 ) {
     val iconSize = 25.dp

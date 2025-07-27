@@ -7,6 +7,7 @@ import com.pararam2006.coffeeapp.ui.registration.RegistrationScreenViewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import com.pararam2006.coffeeapp.ui.map.MapScreenViewModel
+import com.pararam2006.coffeeapp.ui.order.OrderScreenViewModel
 
 val viewModelModule = module {
     viewModelOf(::RegistrationScreenViewModel)
@@ -14,4 +15,5 @@ val viewModelModule = module {
     viewModelOf(::LocationsViewModel)
     viewModelOf(::MenuScreenViewModel)
     viewModelOf(::MapScreenViewModel)
+    viewModelOf(::OrderScreenViewModel)
 }

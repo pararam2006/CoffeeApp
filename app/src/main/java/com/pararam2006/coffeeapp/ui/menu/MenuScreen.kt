@@ -22,13 +22,13 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.rememberAsyncImagePainter
 import com.pararam2006.coffeeapp.R
 import com.pararam2006.coffeeapp.core.ui.AmountSelector
 import com.pararam2006.coffeeapp.core.ui.CoffeeButton
@@ -38,13 +38,18 @@ import com.pararam2006.coffeeapp.ui.theme.AmountSelectorCounterPrimary
 import com.pararam2006.coffeeapp.ui.theme.CoffeeAppTheme
 import com.pararam2006.coffeeapp.ui.theme.LocationCardTextPrimary
 import com.pararam2006.coffeeapp.ui.theme.LocationCardTextSecondary
+import com.pararam2006.coffeeapp.ui.theme.MenuItemBackgroundPrimaty
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Composable
 fun MenuScreen(
     menu: List<MenuItemDto>,
-    onNavigateToOrder: () -> Unit,
-    onLoadMenu: () -> Unit, // Восстановлено до () -> Unit
+    onNavigateToOrder: (menuItemsJson: String) -> Unit,
+    onLoadMenu: () -> Unit,
     modifier: Modifier = Modifier,
+    onPlusPressed: (id: Int) -> Unit,
+    onMinusPressed: (id: Int) -> Unit
 ) {
     LaunchedEffect(Unit) {
         onLoadMenu()
@@ -64,15 +69,19 @@ fun MenuScreen(
                     coffeeName = menuItem.name,
                     price = menuItem.price,
                     count = menuItem.count,
-                    onPlusPressed = {},
-                    onMinusPressed = {}
+                    imageUrl = menuItem.imageUrl,
+                    onPlusPressed = { onPlusPressed(menuItem.id) },
+                    onMinusPressed = { onMinusPressed(menuItem.id) },
                 )
             }
-
         }
         CoffeeButton(
             text = "Перейти к оплате",
-            onClick = onNavigateToOrder,
+            onClick = {
+                val selectedMenuItems = menu.filter { it.count > 0 }
+                val menuItemsJson = Json.encodeToString(selectedMenuItems)
+                onNavigateToOrder(menuItemsJson)
+            },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth(0.9f)
@@ -85,6 +94,7 @@ fun MenuItem(
     coffeeName: String,
     price: Int,
     count: Int,
+    imageUrl: String,
     onPlusPressed: () -> Unit,
     onMinusPressed: () -> Unit,
 ) {
@@ -96,18 +106,23 @@ fun MenuItem(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red)
                 .weight(0.9f),
             contentAlignment = Alignment.Center
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
+                painter = if (imageUrl.isNotEmpty()) {
+                    rememberAsyncImagePainter(imageUrl)
+                } else {
+                    painterResource(R.drawable.ic_launcher_foreground)
+                },
                 contentDescription = null
             )
         }
 
         Box(
-            modifier = Modifier.weight(0.4f)
+            modifier = Modifier
+                .weight(0.4f)
+                .background(MenuItemBackgroundPrimaty)
         ) {
             Column(
                 modifier = Modifier
@@ -163,6 +178,7 @@ private fun MenuItemPreview() {
             count = 15,
             onPlusPressed = {},
             onMinusPressed = {},
+            imageUrl = "",
         )
     }
 }
@@ -219,7 +235,9 @@ private fun MenuPreview() {
                 )
             },
             onNavigateToOrder = {},
-            onLoadMenu = {}
+            onLoadMenu = {},
+            onPlusPressed = {},
+            onMinusPressed = {}
         )
     }
 }

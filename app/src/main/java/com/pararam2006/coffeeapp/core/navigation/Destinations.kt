@@ -9,13 +9,13 @@ object Register
 object Auth
 
 @Serializable
+data class Menu(val id: Int)
+
+@Serializable
 object Locations
 
 @Serializable
 object CoffeeMap
 
 @Serializable
-data class Menu(val id: Int)
-
-@Serializable
-object Order
+data class Order(val menuItemsJson: String)

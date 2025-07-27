@@ -1,9 +1,11 @@
 [versions]
 agp = "8.11.1"
+coilCompose = "3.3.0"
 converterGson = "3.0.0"
 koinAndroid = "4.1.0"
 koinAndroidxCompose = "4.1.0"
 kotlin = "2.0.21"
+kotlinxSerializationJson = "1.7.1"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -11,12 +13,13 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
 composeBom = "2024.09.00"
-mapsMobile = "4.4.0-full"
+mapsMobile = "4.18.0-full"
 navigationComposeAndroid = "2.9.2"
 runtimeAndroid = "1.8.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -37,6 +40,7 @@ koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndr
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 maps-mobile = { module = "com.yandex.android:maps.mobile", version.ref = "mapsMobile" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
