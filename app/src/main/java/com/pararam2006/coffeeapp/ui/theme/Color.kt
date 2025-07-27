@@ -17,3 +17,6 @@ val EnabledButtonTextPrimary = Color(0xFFF6E5D1)
 val LocationCardBackgroundPrimary = Color(0xFFF6E5D1)
 val LocationCardTextPrimary = Color(0xFF846340)
 val LocationCardTextSecondary = Color(0xffaf9479)
+val AmountSelectorButtonsPrimary = Color(0xFFF6E5D1)
+val AmountSelectorCounterPrimary = Color(0xFF846340)
+val MenuItemBackgroundPrimaty = Color.White

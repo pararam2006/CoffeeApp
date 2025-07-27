@@ -1,4 +1,4 @@
-package com.pararam2006.coffeeapp.ui.coffeeNearby
+package com.pararam2006.coffeeapp.ui.locations
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -40,6 +40,7 @@ fun LocationsScreen(
     locations: List<LocationsDto>,
     onLoadLocations: () -> Unit,
     modifier: Modifier = Modifier,
+    onNavigateToMap: () -> Unit,
 ) {
     LaunchedEffect(Unit) {
         onLoadLocations()
@@ -62,7 +63,7 @@ fun LocationsScreen(
 
         CoffeeButton(
             text = "На карте",
-            onClick = {},
+            onClick = onNavigateToMap,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth(0.9f),
@@ -94,17 +95,21 @@ fun Location(name: String) {
             )
             Text(
                 text = name, style = TextStyle(
-                    color = LocationCardTextPrimary, fontWeight = FontWeight.Bold, fontSize = 18.sp
+                    color = LocationCardTextPrimary,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
                 )
             )
             Text(
                 text = "1км от вас", //TODO заменить на реальные данные от геолокации
-                style = TextStyle(color = LocationCardTextSecondary, fontSize = 14.sp)
+                style = TextStyle(
+                    color = LocationCardTextSecondary,
+                    fontSize = 14.sp
+                )
             )
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
-
 }
 
 @Preview
@@ -115,32 +120,33 @@ private fun LocationsScreenPreview() {
             locations = listOf(
                 LocationsDto(
                     id = 0, name = "BEDOEV COFFEE", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Coffee Like", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "EM&DI Coffee and Snacks", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Коффе есть", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
                 LocationsDto(
                     id = 0, name = "Набоков", point = PointDto(
-                        latitude = 0, longitude = 0
+                        latitude = 0.0, longitude = 0.0
                     )
                 ),
 
                 ),
             onLoadLocations = {},
+            onNavigateToMap = {}
         )
     }
 }

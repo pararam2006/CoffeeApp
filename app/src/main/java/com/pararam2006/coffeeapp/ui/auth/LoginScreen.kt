@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.pararam2006.coffeeapp.core.ui.CoffeeButton
 import com.pararam2006.coffeeapp.core.ui.CoffeeTextField
 import com.pararam2006.coffeeapp.ui.theme.CoffeeAppTheme
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun LoginScreen(
@@ -30,9 +31,17 @@ fun LoginScreen(
     onAuth: () -> Unit,
     onNavigateToRegister: () -> Unit,
     onNavigateToLocations: () -> Unit,
+    isSuccess: Boolean,
     modifier: Modifier = Modifier
 ) {
     val elemModifier = Modifier.width(280.dp)
+
+    LaunchedEffect(isSuccess) {
+        if (isSuccess) {
+            onNavigateToLocations()
+        }
+    }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -91,7 +100,8 @@ private fun AuthScreenPreview() {
             onPasswordChange = {},
             onAuth = {},
             onNavigateToRegister = {},
-            onNavigateToLocations = {}
+            onNavigateToLocations = {},
+            isSuccess = false
         )
     }
 }

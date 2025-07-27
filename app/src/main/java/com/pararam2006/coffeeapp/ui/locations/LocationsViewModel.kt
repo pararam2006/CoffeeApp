@@ -1,5 +1,6 @@
-package com.pararam2006.coffeeapp.ui.coffeeNearby
+package com.pararam2006.coffeeapp.ui.locations
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,27 +14,27 @@ class LocationsViewModel(
     private val tokenRepository: TokenRepository,
 ) : ViewModel() {
     var locationsList = mutableStateListOf<LocationsDto>()
+        private set
     var token = ""
         private set
 
-    fun getLocations() {
-        viewModelScope.launch {
-            locationsList.run {
-                clear()
-                addAll(listOf(getLocationsUseCase(token)))
-            }
-        }
-    }
-
-    fun saveToken(token: String) {
-        viewModelScope.launch {
-            tokenRepository.saveTokenToPrefs(token)
-        }
+    init {
+        loadToken()
     }
 
     fun loadToken() {
+        token = tokenRepository.getTokenFromPrefs() ?: ""
+    }
+
+    fun getLocations() {
         viewModelScope.launch {
-            token = tokenRepository.getTokenFromPrefs() ?: ""
+            loadToken()
+            val networkList = getLocationsUseCase(token)
+            Log.d("LocationsAPI", networkList.toString())
+            locationsList.run {
+                clear()
+                addAll(getLocationsUseCase(token))
+            }
         }
     }
 }

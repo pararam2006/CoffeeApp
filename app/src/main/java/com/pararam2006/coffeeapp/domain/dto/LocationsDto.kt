@@ -7,6 +7,6 @@ data class LocationsDto(
 )
 
 data class PointDto(
-    val latitude: Int,
-    val longitude: Int,
+    val latitude: Double,
+    val longitude: Double
 )

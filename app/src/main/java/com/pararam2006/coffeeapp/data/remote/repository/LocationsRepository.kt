@@ -7,5 +7,6 @@ import com.pararam2006.coffeeapp.domain.dto.LocationsDto
 class LocationsRepository(
     private val api: CoffeeApi
 ) {
-    suspend fun getLocations(token: String): LocationsDto = api.getLocations(token).toDomain()
+    suspend fun getLocations(token: String): List<LocationsDto> =
+        api.getLocations("Bearer $token").map { it.toDomain() }
 }
